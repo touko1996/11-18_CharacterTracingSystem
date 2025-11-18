@@ -13,43 +13,41 @@ public class AttackState : IState
 
     public void Enter()
     {
-        // °ø°İ ½ÃÀÛ ¡æ °ø°İ Lock È°¼ºÈ­
+        // ê³µê²© ì‹œì‘
         monster.isAttacking = true;
-
-        // Blend´Â 0 ¡æ ÀÌµ¿X °ø°İ ¸ğ¼Ç¸¸
+        // ì´ë™ ì• ë‹ˆë©”ì´ì…˜ ë„ê¸°
         monster.anim.SetFloat("Blend", 0f);
 
-        // Ã¹ °ø°İÀº Áï½Ã ½ÇÇà
+        // ì²« ê³µê²©ì€ ì¦‰ì‹œ ì‹¤í–‰
         monster.anim.SetTrigger("Attack");
 
-        // ¹İº¹ °ø°İ ·çÆ¾ ½ÃÀÛ
+        // ë°˜ë³µ ê³µê²© ë£¨í‹´ ì‹œì‘
         coAttack = monster.StartCoroutine(CoAttack());
     }
 
     public void Update()
     {
-        // °ø°İ Áß¿¡ »óÅÂ ÀüÈ¯ ±İÁö
+        // ê³µê²© ì¤‘ì— ìƒíƒœ ì „í™˜ ê¸ˆì§€
         if (monster.isAttacking)
         {
             RotateToPlayer();
             return;
         }
 
-        // °ø°İÀÌ ³¡³µ´Ù¸é? (¸ğ¼Ç Á¾·á + µô·¹ÀÌ ÀÌÈÄ)
-        // °ø°İ ¹üÀ§¸¦ ¹ş¾î³­ °æ¿ì ÃßÀû »óÅÂ·Î º¹±Í
+        
+        // ê³µê²© ë²”ìœ„ë¥¼ ë²—ì–´ë‚œ ê²½ìš° ì¶”ì  ìƒíƒœë¡œ ë³µê·€
         if (!monster.canAttackPlayer)
         {
             monster.ChangeState(new TraceState(monster));
             return;
         }
 
-        // °ø°İ Áß ¾Æ´ÏÁö¸¸ °ø°İ »ç°Å¸®¶ó¸é È¸Àü À¯Áö
+        // ê³µê²© ì¤‘ ì•„ë‹ˆì§€ë§Œ ê³µê²© ì‚¬ê±°ë¦¬ë¼ë©´ íšŒì „ ìœ ì§€
         RotateToPlayer();
     }
 
     public void Exit()
     {
-        // »óÅÂ Á¾·á ½Ã Lock Ç®±â
         monster.isAttacking = false;
 
         if (coAttack != null)
@@ -60,18 +58,16 @@ public class AttackState : IState
     {
         while (true)
         {
-            // °ø°İ Lock È°¼ºÈ­ ¡æ °ø°İ ÁßÀº »óÅÂ ÀüÈ¯ ±İÁö
             monster.isAttacking = true;
 
             monster.anim.SetTrigger("Attack");
 
-            // °ø°İ µô·¹ÀÌ (¸ğ¼Ç + ÄğÅ¸ÀÓ)
+            // ê³µê²© ë”œë ˆì´ (ëª¨ì…˜ + ì¿¨íƒ€ì„)
             yield return new WaitForSeconds(1.5f);
 
-            // °ø°İ ¸ğ¼ÇÀÌ ³¡³µ´Ù°í °¡Á¤ (Animation Event¿¡¼­µµ false°¡ µÊ)
             monster.isAttacking = false;
 
-            // °ø°İ ³¡³µ°í ¡æ °ø°İ ¹üÀ§°¡ ¾Æ´Ï¶ó¸é ÃßÀûÀ¸·Î ÀÌµ¿
+            // ê³µê²© ëë‚¬ê³  ê³µê²© ë²”ìœ„ê°€ ì•„ë‹ˆë¼ë©´ ì¶”ì ìœ¼ë¡œ ì´ë™
             if (!monster.canAttackPlayer)
             {
                 monster.ChangeState(new TraceState(monster));

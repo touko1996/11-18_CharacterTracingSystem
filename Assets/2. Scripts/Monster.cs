@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    [Header("ÃßÀû ¼¼ÆÃ")]
+    [Header("ì¶”ì  ì„¸íŒ…")]
     public PlayerMove tracingTarget;
     public float moveSpeed = 3.0f;
     public float tracingRange = 5.0f;
     public float attackRange = 1.0f;
     public float patrolRadius = 8.0f;
-    public Vector3 homePosition;           //º¹±ÍÁöÁ¡
+    public Vector3 homePosition;           //ë³µê·€ì§€ì 
 
-    public bool canTracePlayer;            //ÃßÀû °¡´É ¿©ºÎ
-    public bool canAttackPlayer;           //°ø°İ °¡´É ¿©ºÎ
-    public bool isHomePoint;               //º¹±ÍÁöÁ¡¿¡ µµ´ŞÇß´ÂÁö
+    public bool canTracePlayer;            //ì¶”ì  ê°€ëŠ¥ ì—¬ë¶€
+    public bool canAttackPlayer;           //ê³µê²© ê°€ëŠ¥ ì—¬ë¶€
+    public bool isHomePoint;               //ë³µê·€ì§€ì ì— ë„ë‹¬í–ˆëŠ”ì§€
     public bool isAttacking;
     public Animator anim;
     public IState currentState;
@@ -34,8 +34,8 @@ public class Monster : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, tracingTarget.transform.position);
 
-        canTracePlayer = distance <= tracingRange; //µÑ »çÀÌÀÇ °Å¸®°¡ Ãß°İ¹üÀ§º¸´Ù ÀÛ°Å³ª °°´Ù¸é
-        canAttackPlayer = distance <= attackRange; //µÑ »çÀÌÀÇ °Å¸®°¡ °ø°İ¹üÀ§º¸´Ù ÀÛ°Å³ª °°´Ù¸é
+        canTracePlayer = distance <= tracingRange; //ë‘˜ ì‚¬ì´ì˜ ê±°ë¦¬ê°€ ì¶”ê²©ë²”ìœ„ë³´ë‹¤ ì‘ê±°ë‚˜ ê°™ë‹¤ë©´
+        canAttackPlayer = distance <= attackRange; //ë‘˜ ì‚¬ì´ì˜ ê±°ë¦¬ê°€ ê³µê²©ë²”ìœ„ë³´ë‹¤ ì‘ê±°ë‚˜ ê°™ë‹¤ë©´
 
         currentState?.Update();
 
@@ -49,19 +49,19 @@ public class Monster : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        // ÆĞÆ®·Ñ ¹üÀ§ (homePosition ±âÁØ)
+        // íŒ¨íŠ¸ë¡¤ ë²”ìœ„ (homePosition ê¸°ì¤€)
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(homePosition, patrolRadius);
 
-        // ÃßÀû ¹üÀ§ (ÇöÀç À§Ä¡ ±âÁØ)
+        // ì¶”ì  ë²”ìœ„ (í˜„ì¬ ìœ„ì¹˜ ê¸°ì¤€)
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, tracingRange);
 
-        // °ø°İ ¹üÀ§ (ÇöÀç À§Ä¡ ±âÁØ)
+        // ê³µê²© ë²”ìœ„ (í˜„ì¬ ìœ„ì¹˜ ê¸°ì¤€)
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
-
+    //í”¼ê²©ì²˜ë¦¬ìš© ë©”ì„œë“œ
     public void RealAttack()
     {
         if (tracingTarget == null) return;

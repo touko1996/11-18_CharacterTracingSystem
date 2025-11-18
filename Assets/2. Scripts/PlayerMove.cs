@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMove : MonoBehaviour
 {
-    [Header("¿òÁ÷ÀÓ ¼¼ÆÃ")]
+    [Header("í”Œë ˆì´ì–´ ì„¸íŒ…")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotateSpeed = 10f;
     [SerializeField] private float blendSmoothSpeed = 10f;
@@ -15,12 +15,11 @@ public class PlayerMove : MonoBehaviour
     private Vector3 moveDir;
     private float currentBlend = 0f;
 
-    // ÇÇ°İ ¿¬Ãâ¿ë º¯¼ö
+    // í”¼ê²© ì—°ì¶œìš© ë³€ìˆ˜
     private SkinnedMeshRenderer meshRenderer;
     private Color originalColor;
 
-    // È¿°úÀ½ Ãß°¡
-    [Header("ÇÇ°İ È¿°úÀ½")]
+    [Header("í”¼ê²© íš¨ê³¼ìŒ")]
     [SerializeField] private AudioClip hitSFX;
     private AudioSource audioSource;
 
@@ -30,7 +29,7 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
-        // ½ºÅ² ¸Ş½Ã Å½»ö
+        // ìŠ¤í‚¨ ë©”ì‹œ íƒìƒ‰ (ìì‹ì˜¤ë¸Œì íŠ¸ì—ì„œ ê°€ì ¸ì˜¤ê¸°)
         meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         if (meshRenderer != null)
             originalColor = meshRenderer.material.color;
@@ -62,13 +61,13 @@ public class PlayerMove : MonoBehaviour
         anim.SetFloat("Blend", currentBlend);
     }
 
-    // ÇÇ°İ Ã³¸®
+    // í”¼ê²© ì²˜ë¦¬
     public void TakeHit()
     {
         if (meshRenderer != null)
             StartCoroutine(CoHitFlash());
 
-        // ÇÇ°İ È¿°úÀ½ Àç»ı
+        // í”¼ê²© íš¨ê³¼ìŒ ì¬ìƒ
         if (hitSFX != null)
             audioSource.PlayOneShot(hitSFX);
     }

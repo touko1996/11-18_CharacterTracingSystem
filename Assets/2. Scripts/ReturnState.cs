@@ -18,7 +18,7 @@ public class ReturnState : IState
 
     public void Update()
     {
-        // 1) Áı(homePosition) ¹æÇâÀ¸·Î È¸Àü
+        // 1) í™ˆí¬ì§€ì…˜ìœ¼ë¡œ íšŒì „
         Vector3 dir = monster.homePosition - monster.transform.position;
         dir.y = 0f;
 
@@ -29,14 +29,14 @@ public class ReturnState : IState
                 Quaternion.Slerp(monster.transform.rotation, targetRot, 10f * Time.deltaTime);
         }
 
-        // 2) homePositionÀ¸·Î ÀÌµ¿
+        // 2) í™ˆí¬ì§€ì…˜ìœ¼ë¡œ ì´ë™
         monster.transform.position =
             Vector3.MoveTowards(
                 monster.transform.position,
                 monster.homePosition,
                 monster.moveSpeed * Time.deltaTime);
 
-        // 3) homePosition µµÂø ½Ã ¡æ PatrolState·Î ÀüÈ¯
+        // 3) í™ˆí¬ì§€ì…˜ ë„ì°© ì‹œ PatrolStateë¡œ ì „í™˜
         if (monster.isHomePoint)
         {
             monster.ChangeState(new PatrolState(monster));
